@@ -141,32 +141,71 @@
   border: none;
 }
 
-/* ---- MobileHeader ---- */
+/* ---- MobileHeader (branded, sticky app bar) ---- */
 .mobile-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding-top: env(safe-area-inset-top, 0);
+}
+.mobile-header__inner {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   height: var(--nav-height);
+  max-width: var(--content-max-narrow);
+  margin-inline: auto;
   padding-inline: var(--space-4);
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
 }
 .mobile-header__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: var(--color-ink);
-  display: inline-flex;
-  align-items: center;
   cursor: pointer;
+  margin-inline-start: calc(var(--space-2) * -1);
+  padding: var(--space-1);
 }
-.mobile-header__title {
-  flex: 1;
-  text-align: center;
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
+.mobile-header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
   font-weight: var(--weight-semibold);
+  color: var(--color-ink);
 }
-.mobile-header__spacer { width: 24px; }
+.mobile-header__brand-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  align-self: center;
+}
+.mobile-header__brand-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mobile-header__brand-sub {
+  font-weight: var(--weight-regular);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.mobile-header__brand-sub::before {
+  content: "·";
+  margin-inline-end: var(--space-2);
+}
+.mobile-header__action {
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+/* Very narrow phones: drop the sub-label so the facility name never truncates. */
+@media (max-width: 359px) {
+  .mobile-header__brand-sub { display: none; }
+}
 
 /* ---- RoleShell ---- */
 .role-shell { min-height: 100dvh; }

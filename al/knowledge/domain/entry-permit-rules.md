@@ -103,5 +103,8 @@ This system follows the privacy model established by India's Digital Personal Da
 | **No data sharing** | Visitor data is never shared with third parties. Integration with external government APIs is out of scope for this system. |
 | **Security** | All data at rest is encrypted. QR codes use signed tokens that cannot be forged or decoded to reveal visitor data. |
 
+**Visitor profiles (created once, reused across visits):**
+A visitor profile persists identity so it isn't re-entered each visit. It holds **only**: name, phone number (the account key), government-ID type, the **last 4 digits** of the ID number, and the ID photo — never a full ID number, never biometrics. A profile is created with explicit consent, is **deletable by the visitor at any time** (right to erasure), and is subject to the same retention limits as any other record. A profile grants **no access on its own** — every pass is still individually reviewed. Phone verification (OTP) happens once at signup and again at each login, never per pass.
+
 **Developer note:**
 If any feature request would require storing a full ID number, biometric data, or calling an external citizen identity API — that feature must not be implemented without a formal privacy review and explicit Facility Admin consent configuration. The default is always data minimisation.

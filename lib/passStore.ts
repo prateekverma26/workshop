@@ -4,13 +4,16 @@
  * There is no backend yet, so created passes live in sessionStorage and a
  * handful of seeded passes cover the terminal states for review. Per
  * al/knowledge/domain/entry-permit-rules.md the store only ever holds the
- * last 4 digits of any ID — never a full number.
+ * last 4 digits of any ID — never a full number. Passes are owned by a
+ * profile via `ownerId` (the profile phone / account key).
  */
 
 export type VisitorPassStatus = "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
 
 export interface VisitorPass {
   id: string;
+  /** Owning profile key (phone). Not shown in the UI. */
+  ownerId: string;
   referenceNumber: string;
   visitorName: string;
   phoneLast4: string;
@@ -37,6 +40,7 @@ const cache = new Map<string, VisitorPass>();
 const SEEDED: Record<string, VisitorPass> = {
   "demo-approved": {
     id: "demo-approved",
+    ownerId: "demo-owner",
     referenceNumber: "GP-2026-0142",
     visitorName: "Anita Rao",
     phoneLast4: "3210",
@@ -54,6 +58,7 @@ const SEEDED: Record<string, VisitorPass> = {
   },
   "demo-rejected": {
     id: "demo-rejected",
+    ownerId: "demo-owner",
     referenceNumber: "GP-2026-0143",
     visitorName: "Anita Rao",
     phoneLast4: "3210",
@@ -72,6 +77,7 @@ const SEEDED: Record<string, VisitorPass> = {
   },
   "demo-expired": {
     id: "demo-expired",
+    ownerId: "demo-owner",
     referenceNumber: "GP-2026-0121",
     visitorName: "Anita Rao",
     phoneLast4: "3210",
@@ -108,6 +114,13 @@ export function getPass(id: string): VisitorPass | null {
   const found = readStore()[id] ?? SEEDED[id] ?? null;
   if (found) cache.set(id, found);
   return found;
+}
+
+/** All passes owned by a profile, newest first. */
+export function listPasses(ownerId: string): VisitorPass[] {
+  return Object.values(readStore())
+    .filter((p) => p.ownerId === ownerId)
+    .reverse();
 }
 
 export type NewPassInput = Omit<

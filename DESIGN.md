@@ -265,7 +265,7 @@ Semantic only — color **and** text label always paired. States:
 - **Responsive:** below `lg`, becomes an off-canvas drawer over a `modal-backdrop`; hidden by default, opened via TopNav menu button.
 
 #### MobileHeader
-- Compact `56px` bar for visitor flows: back affordance, screen title (`--text-body` 600, centered), optional action. No sidebar. Only rendered below `md`.
+- Sticky, mobile-first branded app bar for visitor flows: `56px`, `z-index: sticky`, `safe-area-inset-top` padding. Left: optional back chevron; brand lockup = `ShieldCheck` (`--color-primary`) + facility name (`--weight-semibold`, ellipsis) + app name (`--color-muted`, `·`-separated). Optional trailing action. **The screen's `<h1>` lives in the page content, never here** (one heading per page). Inner content aligns to the `720px` narrow column and centres on wider screens; the bar background is full-bleed. **Responsive:** below `sm` the app-name sub-label drops so the facility name never truncates.
 
 #### RoleShell
 - Composition wrapper: picks TopNav+Sidebar (officer, desktop) or MobileHeader+PageWrapper (visitor, mobile) based on role and viewport. Owns the authenticated layout grid.
@@ -277,10 +277,27 @@ Semantic only — color **and** text label always paired. States:
 
 Every component here is designed 375px-first and must stay legible in bright light (high-contrast text, no light-gray body).
 
-#### RequestForm
-- Vertical stack of `ui/` fields: name (Input), phone (Input), purpose (Textarea), host department (Select), date (DatePicker), time window (TimeRangePicker), ID type (Select), ID number (Input), ID photo (FileUpload), consent (Checkbox), submit (Button, full-width).
-- States: per-field validation on blur; form-level error summary above submit; submit shows loading; success routes to OTP.
-- **Responsive:** single column ≤ `sm`; two-column pairing (name/phone, date/time) ≥ `md`.
+#### ProfileForm (signup, identity — entered once)
+- Vertical stack of `ui/` fields for identity only: name (Input), phone (Input, the account key), ID type (Select), ID number (Input), ID photo (FileUpload), consent (Checkbox), submit (Button, full-width).
+- States: per-field validation; form-level error summary above submit; submit → OTP verification (signup), which on success creates the profile.
+- **Responsive:** single column ≤ `sm`; name/phone and ID-type/number pair up ≥ `md`.
+
+#### VisitForm (request — only visit details)
+- The slimmed request form used by a signed-in visitor: purpose (Textarea), host department (Select), date (DatePicker), time window (TimeRangePicker), submit (Button, full-width). **No identity fields, no OTP** — identity is loaded from the profile.
+- Pairs with `ProfileSummary` above it so the visitor sees whose pass this is.
+- **Responsive:** single column ≤ `sm`; date/time pair ≥ `md`.
+
+#### ProfileSummary (read-only identity)
+- Compact card on `--color-surface`, `--radius-lg`: leading `Avatar` (ID photo, `md`) + name + masked phone (`×××××× 4821`) + `PartialId` (ID type + last 4). Non-interactive; a "signed in as" affordance. Optional trailing "Not you? Log out" ghost link.
+- **Responsive:** full width of the narrow column; wraps identity lines below `sm`.
+
+#### PassList (my passes)
+- The visitor's own passes on the home screen. Each row: reference number (tabular), `StatusBadge`, purpose (truncates), date; whole row links to `/status/[id]`. Rows on `--color-bg` with `--color-border` separators, hover `--color-surface`. Empty → `EmptyState` ("No passes yet — request your first").
+- **Responsive:** rows stack their meta below `sm`; never a card grid.
+
+#### LoginForm (return)
+- Two-phase: phone (Input) → "Send code" → `OtpVerification` (demo `123456`). On a phone with no profile, an inline error offers "Create a profile instead". On success, restores the session and routes to the visitor home.
+- **Responsive:** centered narrow column, `max-width: 360px`, like `OtpVerification`.
 
 #### OtpVerification
 - DemoNotice (top) + "OTP sent to ×××××× 4821" line + OtpInput + attempt count + CountdownTimer/resend.

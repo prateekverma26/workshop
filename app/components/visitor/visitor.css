@@ -148,6 +148,116 @@
   .notice-panel__actions { flex-direction: column; }
 }
 
+/* ---- ProfileSummary (read-only "signed in as") ---- */
+.profile-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+.profile-summary__facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.profile-summary__name {
+  font-weight: var(--weight-medium);
+}
+.profile-summary__meta {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.profile-summary__action {
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+@media (max-width: 479px) {
+  .profile-summary__action {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+}
+
+/* ---- PassList (my passes) ---- */
+.pass-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.pass-list li + li .pass-list__row {
+  border-top: 1px solid var(--color-row-divider);
+}
+.pass-list__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+.pass-list__row:hover {
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+}
+.pass-list__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1;
+}
+.pass-list__ref {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  letter-spacing: 0.02em;
+}
+.pass-list__purpose {
+  font-weight: var(--weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pass-list__date {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.pass-list__chevron {
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+/* ---- Visitor home greeting + actions ---- */
+.home-greeting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.home-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.home-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+/* ---- Auth chooser (welcome) ---- */
+.auth-choice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 /* ---- Demo outcome shortcuts (review affordance, not production) ---- */
 .demo-outcomes {
   display: flex;

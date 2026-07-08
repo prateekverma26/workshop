@@ -9,7 +9,7 @@ A Visitor is any person who does not hold a permanent access credential for the 
 - Delivery personnel, vendors, and contractors with pre-arranged access
 - Repeat visitors (e.g. regular consultants) who may have a known profile in the system
 
-Visitors are **not** internal staff and have **no persistent account** by default. Their identity is verified once per visit using OTP and a government-issued ID photo.
+Visitors are **not** internal staff. They hold a **lightweight self-service profile**, created once on first use: name, phone number, and government-ID details, with the phone verified by OTP and explicit consent captured. The profile is theirs to delete at any time. On return visits they log in with their phone + OTP — they do **not** re-enter their identity. A profile is an identity convenience only; it grants no standing access, and **every pass is still reviewed individually** by the host officer.
 
 **Context at the gate:** Visitors are often stressed, unfamiliar with the facility, and time-pressured. They may be navigating the app on a mobile device with poor signal, in bright sunlight, or in a noisy environment. Every screen they see must be legible, obvious, and forgiving.
 
@@ -30,12 +30,12 @@ Visitors are **not** internal staff and have **no persistent account** by defaul
 
 ## What They Need to Do
 
-1. **Submit a visit request** — fill out the request form with accurate personal and purpose details
-2. **Verify their identity** — enter the OTP sent to their registered mobile number
-3. **Upload an ID photo** — photograph or upload their government ID (Aadhaar, PAN, passport, driving licence) for visual verification at the gate
-4. **Track their pass status** — check whether the request has been approved, is pending, or was rejected
-5. **Present their pass at the gate** — show the QR code on their phone screen to the security terminal
-6. **Comply with the time window** — arrive and complete entry within the approved time slot
+1. **Create a profile once** — first-time visitors enter name, phone, government-ID details, and an ID photo, verify the phone by OTP, and consent to the data policy. This is done a single time.
+2. **Log in on return** — enter phone + OTP; the saved profile loads, no identity re-entry.
+3. **Request a pass** — from their profile, fill only the visit-specific details: purpose, host department, date, and time window.
+4. **Track their pass status** — check whether the request is pending, approved, or rejected.
+5. **Present their pass at the gate** — show the QR code on their phone screen to the security terminal.
+6. **Comply with the time window** — arrive and complete entry within the approved time slot.
 
 ---
 

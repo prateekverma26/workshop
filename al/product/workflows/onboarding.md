@@ -19,33 +19,46 @@ This workflow does **not** create accounts, set roles, or define a staff authent
 
 ---
 
-## Flow A: Visitor first run
+## Flow A: Visitor first run — create a profile once
 
-Visitors have **no persistent account**. Onboarding is orientation, not signup.
+Visitors create a **lightweight profile once**; on return they log in. Identity is captured a single time, then reused.
 
-### Steps
+### Steps (first-time)
 
-1. **Welcome** — visitor lands on the public portal. One screen states what the system does ("Request a gate pass before you arrive"), roughly how long it takes (~2 minutes), and what they'll need:
+1. **Welcome** — visitor lands on the public portal. One screen states what the system does ("Request a gate pass before you arrive"), roughly how long profile setup takes (~2 minutes), and what they'll need:
    - A mobile phone that can receive the OTP
    - A government ID (Aadhaar / PAN / Passport / Driving Licence) to photograph
-   - Their purpose of visit and the host department
-2. **Privacy promise** — the same screen carries the DPDP commitments in plain language: minimum data collected, no biometrics, only the last 4 digits of the ID retained, records auto-deleted after the retention period. This primes the consent checkbox they will meet on the form.
-3. **Start request** — single primary action → the request form (`request-and-approval.md`, state DRAFT).
+   The screen offers two paths: **Create your profile** (first time) and **Log in** (returning).
+2. **Privacy promise** — the DPDP commitments in plain language: minimum data collected, no biometrics, only the last 4 digits of the ID retained, records deletable, auto-deleted after the retention period. This primes the consent checkbox on the profile form.
+3. **Create profile** — visitor enters identity once: name, phone, government-ID type + number, ID photo, and ticks consent.
+4. **Verify phone** — OTP (demo `123456`). On success the profile / visitor ID is created and the session is signed in.
+5. **Land on home** — the visitor home (`/passes`): greeting, their (empty) pass list, and a "Request a pass" action → the slimmed request flow (`request-and-approval.md`).
+
+### Steps (returning)
+
+1. **Log in** — from Welcome, "Log in" → enter phone → OTP (`123456`).
+2. **Session restored** — the saved profile loads; visitor lands on their home with identity already known. No re-entry.
 
 ### Screen states
 
 | State | Trigger | Visitor sees | Actions |
 |---|---|---|---|
-| WELCOME | First arrival at portal | Intro, requirements list, privacy promise | "Start your request" |
-| RETURNING | Prior profile recognised | Skips welcome; prefilled request form | Fill remaining fields |
+| WELCOME | First arrival | Intro, requirements, privacy, two paths | "Create profile" / "Log in" |
+| SIGNUP | Chose create | Identity form + consent | Submit → OTP |
+| SIGNUP_OTP | Identity submitted | OTP entry (demo 123456) | Verify → profile created |
+| LOGIN | Chose log in | Phone entry | Send code → OTP |
+| LOGIN_OTP | Phone submitted | OTP entry | Verify → session restored |
+| HOME | Authenticated | Greeting, pass list, request action | Request a pass |
 
 ### Edge cases
 
 | Scenario | Handling |
 |---|---|
-| Visitor abandons at WELCOME | Nothing is stored — no data has been collected yet |
-| Visitor arrives via a deep link to the form | Welcome is skippable, never a wall; the form is directly reachable |
-| Returning visitor on a new device | Treated as first-run (no account); welcome shows again |
+| Visitor abandons before OTP | No profile created, nothing persisted |
+| Log in with a phone that has no profile | "No profile for this number" → offered "Create one" |
+| Returning visitor on a new device / cleared storage | Profile isn't found locally → they log in; in production the profile is server-side, in the demo they re-create |
+| Visitor wants their data removed | Profile is deletable from home (right to erasure, DPDP) |
+| Not signed in but navigates to request/home | Redirected to Welcome to log in or sign up first |
 
 ---
 

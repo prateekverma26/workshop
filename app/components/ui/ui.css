@@ -46,11 +46,14 @@
   background-color: var(--color-primary);
   color: var(--color-on-fill);
 }
-.btn--primary:hover {
-  background-color: var(--color-primary-hover);
-}
+/* Hover colors are set explicitly so they outrank the global a:hover rule
+   when a button is rendered as an <a> (Link). */
+.btn--primary:hover,
 .btn--primary:active {
   background-color: var(--color-primary-hover);
+  color: var(--color-on-fill);
+}
+.btn--primary:active {
   transform: translateY(1px);
 }
 
@@ -62,20 +65,23 @@
 .btn--secondary:hover {
   background-color: var(--color-surface);
   border-color: var(--color-border-strong);
+  color: var(--color-ink);
 }
 .btn--secondary:active {
   background-color: var(--color-surface-raised);
+  color: var(--color-ink);
 }
 
 .btn--danger {
   background-color: var(--color-danger);
   color: var(--color-on-fill);
 }
-.btn--danger:hover {
-  background-color: var(--color-danger-hover);
-}
+.btn--danger:hover,
 .btn--danger:active {
   background-color: var(--color-danger-hover);
+  color: var(--color-on-fill);
+}
+.btn--danger:active {
   transform: translateY(1px);
 }
 
@@ -85,6 +91,7 @@
 }
 .btn--ghost:hover {
   background-color: var(--color-primary-subtle);
+  color: var(--color-primary);
 }
 
 @media (min-width: 640px) {
@@ -576,32 +583,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-1);
-  }
-}
-
-/* ---- TimeRangePicker ---- */
-fieldset.field {
-  border: none;
-  padding: 0;
-  min-inline-size: 0;
-}
-.field .time-window {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  width: 100%;
-}
-.field .time-window .control {
-  flex: 1;
-}
-@media (max-width: 639px) {
-  .field .time-window {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .field .time-window svg {
-    transform: rotate(90deg);
-    align-self: center;
   }
 }
 

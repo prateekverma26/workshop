@@ -13,34 +13,18 @@
 ## Steps
 
 ### 1. Visitor opens the request form
-The visitor navigates to the visitor pass portal (web or app). If they have a prior profile, personal fields are pre-filled. The form collects:
-- Full name
-- Mobile number (used for OTP)
+The visitor is **already signed in** (profile created or logged in via `onboarding.md`), so identity — name, phone, government-ID type + last 4, ID photo — is loaded from their profile and shown read-only. The request form therefore collects **only the visit-specific fields**:
 - Purpose of visit (freetext, 10–200 chars)
 - Host department (dropdown from facility config)
 - Requested visit date and time window (date picker + time range)
-- Government ID type (Aadhaar / PAN / Passport / Driving Licence)
-- Government ID number
-- Government ID photo (upload or camera capture)
+
+Identity is **not** re-entered, and there is **no per-request OTP** — phone verification happens once at signup/login, not on every pass.
 
 **Screen state: DRAFT**
 
 ---
 
-### 2. OTP verification
-On form submission, the system sends a 6-digit OTP to the visitor's mobile number.
-- Demo system OTP: **123456** (hardcoded for development; no real SMS sent)
-- The visitor enters the OTP on the next screen
-- The system confirms the OTP → identity is linked to the phone number
-
-**Screen state: OTP\_PENDING**
-
-On success → proceed to Step 3.
-On failure → show error; allow resend (max 3 attempts within 10 minutes, then 30-minute lockout).
-
----
-
-### 3. Request submitted
+### 2. Request submitted
 The system creates a pass request record with status PENDING. The Approving Officer for the selected host department is notified (in-app + email, if configured).
 
 The visitor sees a confirmation screen showing:
@@ -102,12 +86,13 @@ If the pass is not used before the valid window closes, the system automatically
 
 | State | Trigger | Visitor sees | Actions available |
 |---|---|---|---|
-| DRAFT | Form opened | Request form | Fill and submit |
-| OTP\_PENDING | Form submitted | OTP entry screen | Enter OTP, resend |
-| PENDING | OTP verified | Reference number, status | None (waiting) |
+| DRAFT | Signed-in visitor opens form | Visit-detail form + read-only identity | Fill and submit |
+| PENDING | Request submitted | Reference number, status | None (waiting) |
 | APPROVED | Officer approves | QR code, pass details | Show at gate |
 | REJECTED | Officer rejects | Reason, next steps | Re-apply, contact host |
 | EXPIRED | Valid window passed | Expiry notice | Re-request new slot |
+
+(Phone verification is handled once at signup/login — see `onboarding.md` — not per request.)
 
 ---
 

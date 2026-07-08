@@ -6,7 +6,7 @@ product
 
 ## Users
 
-**Visitors / Applicants** — members of the public requesting gate passes before or on arrival. Mobile-first; unfamiliar with the system; need a fast, low-friction self-service flow. High stress at the gate if something goes wrong.
+**Visitors / Applicants** — members of the public requesting gate passes before or on arrival. Mobile-first; unfamiliar with the system; need a fast, low-friction self-service flow. High stress at the gate if something goes wrong. On first use they create a lightweight **visitor profile** once (name + phone + government ID, phone-verified by OTP, consent-based and deletable); on return they simply log in with their phone and OTP, and their identity is reused so only the visit-specific details are entered each time. Every pass is still reviewed individually by the host officer.
 
 **Security Staff / Gate Operators** — frontline staff verifying, approving, and issuing passes at the gate terminal. Desktop or tablet; repeat users who need speed; need at-a-glance scan of visitor queues and instant status actions.
 

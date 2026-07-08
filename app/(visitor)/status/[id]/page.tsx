@@ -49,7 +49,7 @@ export default function StatusPage() {
 
   return (
     <>
-      <MobileHeader title="Your gate pass" onBack={() => router.push("/welcome")} />
+      <MobileHeader facilityName="Shastri Bhawan" onBack={() => router.push("/welcome")} />
       <PageWrapper width="narrow">
         <div className="onboard">
           {pass === null ? (
