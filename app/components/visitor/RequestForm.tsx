@@ -68,7 +68,13 @@ export function RequestForm({
     if (values.purpose.trim().length < 10)
       next.purpose = "Describe your purpose in at least 10 characters.";
     if (!values.hostDepartment) next.hostDepartment = "Select the host department.";
-    if (!values.date) next.date = "Choose a visit date.";
+    if (!values.date) {
+      next.date = "Choose a visit date.";
+    } else {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (new Date(values.date) < today) next.date = "Choose today or a future date.";
+    }
     if (!values.timeFrom || !values.timeTo || values.timeTo <= values.timeFrom)
       next.timeFrom = "Set a valid time window (end after start).";
     if (!values.idType) next.idType = "Select an ID type.";
