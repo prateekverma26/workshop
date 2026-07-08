@@ -1,0 +1,257 @@
+/* ============================================================
+   Gate Pass Authentication — Global Tokens & Base Styles
+   All values are defined here per DESIGN.md. Components reference
+   these tokens by name; never hardcode a raw value in a component.
+   ============================================================ */
+
+/* Component styles are authored per-folder but imported here so every class
+   is available on every page, regardless of which components a given page
+   renders. Per the CSS spec, @import must precede all other rules. */
+@import "./components/ui/ui.css";
+@import "./components/layout/layout.css";
+@import "./components/visitor/visitor.css";
+@import "./components/gate/gate.css";
+@import "./components/officer/officer.css";
+@import "./components/onboarding/onboarding.css";
+
+:root {
+  /* ---- Palette (OKLCH) ---- */
+  --color-bg: oklch(1 0 0);
+  --color-surface: oklch(0.976 0.004 192);
+  --color-surface-raised: oklch(0.96 0.006 192);
+  --color-ink: oklch(0.14 0.008 200);
+  --color-muted: oklch(0.48 0.004 200);
+
+  --color-primary: oklch(0.45 0.12 192);
+  --color-primary-hover: oklch(0.38 0.12 192);
+  --color-primary-subtle: oklch(0.94 0.04 192);
+
+  --color-accent: oklch(0.65 0.18 52);
+  --color-accent-subtle: oklch(0.95 0.06 52);
+  --color-accent-ink: oklch(0.35 0.12 52);
+
+  --color-success: oklch(0.48 0.14 158);
+  --color-success-subtle: oklch(0.94 0.05 158);
+  --color-success-ink: oklch(0.3 0.1 158);
+
+  --color-danger: oklch(0.5 0.18 22);
+  --color-danger-hover: oklch(0.42 0.18 22);
+  --color-danger-subtle: oklch(0.96 0.04 22);
+  --color-danger-ink: oklch(0.32 0.14 22);
+
+  --color-border: oklch(0.88 0.006 192);
+  --color-border-strong: oklch(0.72 0.01 192);
+  --color-row-divider: oklch(0.93 0.003 192);
+
+  /* Text that sits on saturated fills (primary/accent/success/danger) */
+  --color-on-fill: oklch(1 0 0);
+
+  /* ---- Typography ---- */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+
+  --text-display: clamp(2rem, 5vw, 4rem);
+  --text-h1: clamp(1.5rem, 3vw, 2.5rem);
+  --text-h2: clamp(1.25rem, 2.5vw, 1.875rem);
+  --text-h3: 1.25rem;
+  --text-body-lg: 1.0625rem;
+  --text-body: 0.9375rem;
+  --text-sm: 0.8125rem;
+  --text-xs: 0.6875rem;
+
+  --leading-display: 1.1;
+  --leading-h1: 1.2;
+  --leading-h2: 1.25;
+  --leading-h3: 1.3;
+  --leading-body: 1.5;
+  --leading-body-lg: 1.6;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-full: 999px;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px oklch(0.14 0.008 200 / 0.06);
+  --shadow-md: 0 4px 12px oklch(0.14 0.008 200 / 0.1);
+  --shadow-lg: 0 12px 32px oklch(0.14 0.008 200 / 0.14);
+
+  /* ---- Z-index ---- */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-modal-backdrop: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+  --z-tooltip: 60;
+
+  /* ---- Motion ---- */
+  --duration-fast: 100ms;
+  --duration-base: 180ms;
+  --duration-slow: 300ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Layout ---- */
+  --nav-height: 56px;
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 64px;
+  --content-max: 1200px;
+  --content-max-narrow: 720px;
+}
+
+/* ============================================================
+   Reset & base
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-semibold);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+}
+
+p {
+  text-wrap: pretty;
+  max-width: 70ch;
+}
+
+a {
+  color: var(--color-primary);
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* ============================================================
+   Universal interaction rules (DESIGN.md Components intro)
+   ============================================================ */
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Coarse-pointer (touch) minimum target size */
+@media (pointer: coarse) {
+  button,
+  a[role="button"],
+  [role="checkbox"],
+  input[type="checkbox"] {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+}
+
+/* Tabular numerals utility for IDs, times, references */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Reduced motion — collapse every transition/animation
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
